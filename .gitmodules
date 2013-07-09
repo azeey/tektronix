@@ -1,0 +1,3 @@
+[submodule "wanglib"]
+	path = wanglib
+	url = https://github.com/baldwint/wanglib.git
