@@ -33,11 +33,3 @@ def to_ols(chdata, threshold, rate=25000000):
 
     return output
 
-
-
-
-
-
-
-    
-    

@@ -4,6 +4,7 @@
 from wanglib.util import Serial
 from wanglib.instruments.tektronix import TDS3000
 import numpy as np
+import ols
 
 class Capture(object):
     """Class to capture samples from Tektronix TDS 3054B"""
@@ -11,8 +12,8 @@ class Capture(object):
     def __init__(self, port='/dev/ttyS0', baud=38400):
         """@todo: to be defined1
 
-        :port: @todo
-        :baud: @todo
+        :port: Serial port
+        :baud: Baud rate (max 38400)
 
         """
         self.port = port
@@ -40,4 +41,19 @@ class Capture(object):
 
 
         return np.array(allch).T
+
+    def capsave(self, file_path, vthresh=1.5):
+        """Capture, convert to OLS format and save to file
+
+        Assumes a voltage threshold of 1.5
+
+        :file_path: output file path
+        :returns: None
+
+        """
+        allch = self.capture()
+        out = ols.to_ols(allch, vthresh)
+        open(file_path, 'w').write(out)
+
+
 
