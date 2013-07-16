@@ -4,6 +4,7 @@
 from wanglib.util import Serial
 from wanglib.instruments.tektronix import TDS3000
 import numpy as np
+from tds3000socket import TDS3000Socket
 import ols
 
 class Capture(object):
@@ -18,8 +19,16 @@ class Capture(object):
         """
         self.port = port
         self.baud = baud
-
         self.bus = Serial(port, baudrate=baud, rtscts=True, term_chars='\n')
+        self.init()
+
+    def init(self):
+        """@todo: Docstring for init
+
+        :arg1: @todo
+        :returns: @todo
+
+        """
         self.bus.write('HDR OFF')
         self.bus.write('DATA:STOP 10000')
         self.bus.write('WFMPRE:NR_P 10000')
@@ -57,3 +66,12 @@ class Capture(object):
 
 
 
+
+class CaptureSock(Capture):
+    """Docstring for CaptureSock """
+
+    def __init__(self, ipaddr):
+        """@todo: to be defined1 """
+        self.bus = TDS3000Socket(ipaddr)
+        self.init()
+        
